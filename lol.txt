@@ -1,5 +1,25 @@
-$scriptContent = Get-Content 'ścieżka\do\skryptu.ps1' -Raw
-Invoke-Command -ScriptBlock { Invoke-Expression $scriptContent }
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$target,
+    [Parameter(Mandatory=$false)]
+    [int[]]$ports = 1..1024
+)
 
-$scriptBlock = [Scriptblock]::Create((Get-Content 'ścieżka\do\skryptu.ps1' -Raw))
-& $scriptBlock
+function Scan-Port {
+    param(
+        [string]$target,
+        [int]$port
+    )
+
+    $tcpTest = Test-NetConnection -ComputerName $target -Port $port -InformationLevel Quiet
+    if ($tcpTest) {
+        "$port open"
+    } else {
+        "$port closed"
+    }
+}
+
+foreach ($port in $ports) {
+    Scan-Port -target $target -port $port
+}
+
