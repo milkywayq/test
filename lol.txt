@@ -1,0 +1,5 @@
+$scriptContent = Get-Content 'ścieżka\do\skryptu.ps1' -Raw
+Invoke-Command -ScriptBlock { Invoke-Expression $scriptContent }
+
+$scriptBlock = [Scriptblock]::Create((Get-Content 'ścieżka\do\skryptu.ps1' -Raw))
+& $scriptBlock
