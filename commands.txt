@@ -1,0 +1,8 @@
+# Ścieżka do pliku tekstowego
+$scriptPath = "C:\ścieżka\do\pliku\skrypt.txt"
+
+# Wczytanie treści skryptu z pliku
+$scriptContent = Get-Content -Path $scriptPath -Raw
+
+# Wykonanie skryptu za pomocą Invoke-Expression
+Invoke-Expression $scriptContent
