@@ -1,0 +1,11 @@
+$keyPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search"
+$cortanaValue = Get-ItemPropertyValue -Path $keyPath -Name "AllowCortana" -ErrorAction SilentlyContinue
+if ($cortanaValue -eq $null) {
+    Write-Output "Cortana policy not set."
+}
+
+
+Remove-Item -Path "PathToCortanaLocalState" -Recurse -Force
+
+
+mklink /H Link Target
