@@ -1,5 +1,7 @@
-reg query HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential
+# Read the Nmap binary into a byte array
+$nmapBinary = [System.IO.File]::ReadAllBytes("C:\Path\To\nmap.exe")
 
-reg query HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\LSA /v RunAsPPL
+# Load the binary into memory and execute it
+$assem = [System.Reflection.Assembly]::Load($nmapBinary)
+# Here you would add the code to invoke the loaded binary with specific arguments
 
-reg query "HKEY_LOCAL_MACHINE\SOFTWARE\MICROSOFT\WINDOWS NT\CURRENTVERSION\WINLOGON" /v CACHEDLOGONSCOUNT
