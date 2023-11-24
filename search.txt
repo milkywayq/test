@@ -1,0 +1,17 @@
+$directories = Get-ChildItem -Path C:\ -Directory -Recurse -ErrorAction SilentlyContinue
+
+foreach ($dir in $directories) {
+    $hasWrite = $false
+    try {
+        $null = New-Item -Path "$($dir.FullName)\testfile.tmp" -ItemType File -ErrorAction Stop
+        Remove-Item "$($dir.FullName)\testfile.tmp" -ErrorAction Stop
+        $hasWrite = $true
+    } catch {
+        # Error occurred, assuming no write access
+    }
+
+    [PSCustomObject]@{
+        Directory = $dir.FullName
+        HasWriteAccess = $hasWrite
+    }
+}
